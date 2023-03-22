@@ -6,6 +6,7 @@ from threading import Thread
 import cv2
 
 from emailing import send_email
+from telegraming import send_picture
 
 video = cv2.VideoCapture(0)
 time.sleep(1)
@@ -15,6 +16,7 @@ status_list = []
 count = 1
 
 
+# Function to clean images folder
 def clean_folder():
 	images = glob.glob("images/*.png")
 	for image in images:
@@ -55,18 +57,22 @@ while True:
 	status_list = status_list[-2:]
 
 	if status_list[0] == 1 and status_list[1] == 0:
+		telegram_thread = Thread(target=send_picture, args=(image_with_object,))
+		telegram_thread.daemon = True
 		email_thread = Thread(target=send_email, args=(image_with_object,))
 		email_thread.daemon = True
 		clean_folder_thread = Thread(target=clean_folder)
 		clean_folder_thread.daemon = True
 
+		telegram_thread.start()
 		email_thread.start()
-		clean_folder_thread.start()
 
 	cv2.imshow("Video", frame)
 	key = cv2.waitKey(1)
 
 	if key == ord("q"):
 		break
+
+clean_folder_thread.start()
 
 video.release()
