@@ -3,6 +3,6 @@ As most parents know that keeping kids away from your precious computer equipmen
 
 I have used Python as I am trying to get more familiar with it, and it's various libraries. It also takes advantage of threading in Python to send an email and clean the folder that keeps the photos at the same time. 
 
-I am planning to add Telegram bot support as well. 
+Telegram bot with has been added, it sends as message with a captured picture to the chat.
 
 ** it means little ruffian, hoodlum in Polish, as my lovely brother calls my kids
